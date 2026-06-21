@@ -875,6 +875,13 @@ body.proj-open .proj-back-btn{opacity:1;pointer-events:all}
 .cp-topnav-links a{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#6b5c4e;text-decoration:none;cursor:pointer;}
 .cp-topnav-links a:hover{color:#3d2e1e;}
 .cp-topnav-close{display:none;}
+
+.gp-mini-footer{border-top:1px solid var(--gold);background:var(--cream,#F5F0E8);padding:2.5rem 2rem 2rem;margin-top:3rem}
+.gp-mf-slogan{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(15px,1.4vw,19px);color:var(--charcoal);text-align:center;margin-bottom:1.75rem;letter-spacing:.02em}
+.gp-mf-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem}
+.gp-mf-contact{font-size:11.5px;letter-spacing:.05em;color:rgba(41,35,28,.55)}
+.gp-mf-cta{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);cursor:pointer;border-bottom:1px solid var(--gold);padding-bottom:2px}
+@media(max-width:600px){.gp-mf-bar{flex-direction:column;align-items:flex-start}.gp-mf-slogan{font-size:15px}}
 </style>
 </head>
 <body>
@@ -2289,6 +2296,7 @@ function renderCollDetail(key, imgs, meta) {
       '</div>';
     grid.appendChild(row);
   });
+  grid.appendChild(gpBuildMiniFooter());
 }
 
 function gpOpen(key) {
@@ -2485,7 +2493,8 @@ function initInspo() {
 }
 
 function gpBuildEditorial(c){var ed=document.createElement('div');ed.className='gp-editorial';ed.innerHTML='<span class="gp-ed-label">'+c.label+'</span><div class="gp-ed-headline">'+c.headline+'</div><div class="gp-ed-body">'+c.body+'</div>';return ed;}
-function renderGalleryWithCopy(key,imgs,copyMap){var grid=document.getElementById('gp-grid');grid.className='';grid.style.display='block';grid.style.padding='0 2rem 4rem';grid.style.maxWidth='1400px';grid.style.margin='0 auto';var photos=imgs.slice(1);var copy=(copyMap&&copyMap[key])||[];var i=0,textIdx=0;while(i<photos.length){if(i%3===0){var full=document.createElement('div');full.style.cssText='margin-bottom:1.5rem';full.innerHTML='<img src="'+photos[i]+'" style="width:100%;display:block;object-fit:cover;max-height:65vh" loading="lazy">';grid.appendChild(full);i++;}else{var pair=document.createElement('div');pair.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem';var img1='<div><img src="'+photos[i]+'" style="width:100%;display:block;object-fit:cover;aspect-ratio:4/3" loading="lazy"></div>';var img2=(i+1<photos.length)?'<div><img src="'+photos[i+1]+'" style="width:100%;display:block;object-fit:cover;aspect-ratio:4/3" loading="lazy"></div>':'<div></div>';pair.innerHTML=img1+img2;grid.appendChild(pair);i+=2;}if(textIdx<copy.length){grid.appendChild(gpBuildEditorial(copy[textIdx]));textIdx++;}}}
+function renderGalleryWithCopy(key,imgs,copyMap){var grid=document.getElementById('gp-grid');grid.className='';grid.style.display='block';grid.style.padding='0 2rem 4rem';grid.style.maxWidth='1400px';grid.style.margin='0 auto';var photos=imgs.slice(1);var copy=(copyMap&&copyMap[key])||[];var i=0,textIdx=0;while(i<photos.length){if(i%3===0){var full=document.createElement('div');full.style.cssText='margin-bottom:1.5rem';full.innerHTML='<img src="'+photos[i]+'" style="width:100%;display:block;object-fit:cover;max-height:65vh" loading="lazy">';grid.appendChild(full);i++;}else{var pair=document.createElement('div');pair.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem';var img1='<div><img src="'+photos[i]+'" style="width:100%;display:block;object-fit:cover;aspect-ratio:4/3" loading="lazy"></div>';var img2=(i+1<photos.length)?'<div><img src="'+photos[i+1]+'" style="width:100%;display:block;object-fit:cover;aspect-ratio:4/3" loading="lazy"></div>':'<div></div>';pair.innerHTML=img1+img2;grid.appendChild(pair);i+=2;}if(textIdx<copy.length){grid.appendChild(gpBuildEditorial(copy[textIdx]));textIdx++;}}  grid.appendChild(gpBuildMiniFooter());
+}
 function renderSpaceDetail(key,imgs,meta){renderGalleryWithCopy(key,imgs,SPACE_COPY);}
 function renderDesignDetail(key,imgs,meta){renderGalleryWithCopy(key,imgs,DESIGN_COPY);}
 
@@ -2645,6 +2654,10 @@ function showProjectsPage(){
         +'</div>';
       list.appendChild(item);
     });
+    // Mini-footer
+    var projMf = gpBuildMiniFooter();
+    projMf.style.margin = '4rem 2rem 0';
+    document.getElementById('projList').appendChild(projMf);
     pg.dataset.loaded = '1';
   }
 }
