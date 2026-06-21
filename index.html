@@ -2493,6 +2493,13 @@ function initInspo() {
 }
 
 function gpBuildEditorial(c){var ed=document.createElement('div');ed.className='gp-editorial';ed.innerHTML='<span class="gp-ed-label">'+c.label+'</span><div class="gp-ed-headline">'+c.headline+'</div><div class="gp-ed-body">'+c.body+'</div>';return ed;}
+function gpBuildMiniFooter(){
+  var mf=document.createElement('div');
+  mf.className='gp-mini-footer';
+  mf.innerHTML='<div class="gp-mf-slogan">Premium ceramics for discerning interiors</div>'+'<div class="gp-mf-bar">'+'<div class="gp-mf-contact">+6013-342 8261 &nbsp;&middot;&nbsp; aceramicsholdings@gmail.com</div>'+'<span class="gp-mf-cta" onclick="gpClose();setTimeout(function(){document.getElementById(\'contact-form\').scrollIntoView({behavior:\'smooth\'});},300)">GET IN TOUCH &rarr;</span>'+'</div>';
+  return mf;
+}
+
 function renderGalleryWithCopy(key,imgs,copyMap){var grid=document.getElementById('gp-grid');grid.className='';grid.style.display='block';grid.style.padding='0 2rem 4rem';grid.style.maxWidth='1400px';grid.style.margin='0 auto';var photos=imgs.slice(1);var copy=(copyMap&&copyMap[key])||[];var i=0,textIdx=0;while(i<photos.length){if(i%3===0){var full=document.createElement('div');full.style.cssText='margin-bottom:1.5rem';full.innerHTML='<img src="'+photos[i]+'" style="width:100%;display:block;object-fit:cover;max-height:65vh" loading="lazy">';grid.appendChild(full);i++;}else{var pair=document.createElement('div');pair.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem';var img1='<div><img src="'+photos[i]+'" style="width:100%;display:block;object-fit:cover;aspect-ratio:4/3" loading="lazy"></div>';var img2=(i+1<photos.length)?'<div><img src="'+photos[i+1]+'" style="width:100%;display:block;object-fit:cover;aspect-ratio:4/3" loading="lazy"></div>':'<div></div>';pair.innerHTML=img1+img2;grid.appendChild(pair);i+=2;}if(textIdx<copy.length){grid.appendChild(gpBuildEditorial(copy[textIdx]));textIdx++;}}  grid.appendChild(gpBuildMiniFooter());
 }
 function renderSpaceDetail(key,imgs,meta){renderGalleryWithCopy(key,imgs,SPACE_COPY);}
@@ -2654,10 +2661,7 @@ function showProjectsPage(){
         +'</div>';
       list.appendChild(item);
     });
-    // Mini-footer
-    var projMf = gpBuildMiniFooter();
-    projMf.style.margin = '4rem 2rem 0';
-    document.getElementById('projList').appendChild(projMf);
+    var projMf=gpBuildMiniFooter();projMf.style.margin='4rem 2rem 0';document.getElementById('projList').appendChild(projMf);
     pg.dataset.loaded = '1';
   }
 }
