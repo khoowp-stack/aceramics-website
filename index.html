@@ -2495,18 +2495,23 @@ function initInspo() {
 }
 
 function gpBuildEditorial(c){var ed=document.createElement('div');ed.className='gp-editorial';ed.innerHTML='<span class="gp-ed-label">'+c.label+'</span><div class="gp-ed-headline">'+c.headline+'</div><div class="gp-ed-body">'+c.body+'</div>';return ed;}
+function gpContactScroll(){
+  document.getElementById('gp-overlay').style.display='none';
+  document.body.style.overflow='';
+  setTimeout(function(){document.getElementById('contact-form').scrollIntoView({behavior:'smooth'});},150);
+}
 function gpBuildMiniFooter(){
   var mf=document.createElement('div');
   mf.className='gp-mini-footer';
-  mf.innerHTML=
-    '<div class="gp-mf-slogan">Premium ceramics for discerning interiors</div>'+
-    '<div class="gp-mf-line"></div>'+
-    '<div class="gp-mf-body">'+
-      '<div class="gp-mf-bar">'+
-        '<div class="gp-mf-contact">+6013-342 8261 &nbsp;&middot;&nbsp; aceramicsholdings@gmail.com</div>'+
-        '<span class="gp-mf-cta" onclick="document.getElementById('gp-overlay').style.display='none';document.body.style.overflow='';setTimeout(function(){document.getElementById('contact-form').scrollIntoView({behavior:'smooth'});},150)">GET IN TOUCH &rarr;</span>'+
-      '</div>'+
-    '</div>';
+  var sl=document.createElement('div');sl.className='gp-mf-slogan';sl.textContent='Premium ceramics for discerning interiors';
+  var ln=document.createElement('div');ln.className='gp-mf-line';
+  var bd=document.createElement('div');bd.className='gp-mf-body';
+  var bar=document.createElement('div');bar.className='gp-mf-bar';
+  var ct=document.createElement('div');ct.className='gp-mf-contact';ct.innerHTML='+6013-342 8261 &nbsp;&middot;&nbsp; aceramicsholdings@gmail.com';
+  var cta=document.createElement('span');cta.className='gp-mf-cta';cta.textContent='GET IN TOUCH →';cta.onclick=gpContactScroll;
+  bar.appendChild(ct);bar.appendChild(cta);
+  bd.appendChild(bar);
+  mf.appendChild(sl);mf.appendChild(ln);mf.appendChild(bd);
   return mf;
 }
 
