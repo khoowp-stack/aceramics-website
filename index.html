@@ -1609,7 +1609,7 @@ body.menu-open #menuClose{opacity:1;pointer-events:all}
 .ce-app-closing{font-size:10.5px;color:var(--gold);letter-spacing:4px;text-transform:uppercase;text-align:center;margin:28px 0 0;}
 .ce-swatches { margin-top: 1.8rem; }
 .ce-swatches img { width: 100%; max-width: 480px; display: block; border-radius: 2px; }
-.ce-swatches.ce-sw-cl-bw img { width: 30mm; height: 30mm; object-fit: cover; display: block; border-radius: 2px; }
+.ce-swatches.ce-sw-cl-bw-0 img { width: 30mm; height: 30mm; object-fit: cover; display: block; border-radius: 2px; }
 .ce-specs { border-top:1px solid rgba(61,46,30,.15); padding-top:20px; }
 .ce-spec {
   display:flex; gap:12px; align-items:baseline;
@@ -2281,7 +2281,7 @@ function renderCollDetail(key, imgs, meta) {
     var row = document.createElement('div');
     row.className = 'ce-row ' + (i % 2 === 0 ? 'ce-img-left' : 'ce-img-right');
     var swSrc = (SERIES_SWATCHES[key] && SERIES_SWATCHES[key][i]) ? SERIES_SWATCHES[key][i] : null;
-    var swHtml = swSrc ? '<div class="ce-swatches ce-sw-' + key + '"><img src="' + swSrc + '" alt="color variations"></div>' : '';
+    var swHtml = swSrc ? '<div class="ce-swatches ce-sw-' + key + ' ce-sw-' + key + '-' + i + '"><img src="' + swSrc + '" alt="color variations"></div>' : '';
     row.innerHTML =
       '<div class="ce-img"><img src="' + src + '" alt="' + s.name + '"></div>' +
       '<div class="ce-text">' +
