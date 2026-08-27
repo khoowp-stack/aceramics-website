@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jimmi Yeo &middot; A Ceramics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Deliberate single (light) theme, matching the printed card's white background —
+     painted explicitly so it holds on either host ground. */
+  :root{
+    --bg: #FFFFFF;
+    --surface: #FFFFFF;
+    --surface-2: #F7F4EC;
+    --text: #211B14;
+    --text-soft: #6B6152;
+    --gold: #AD8434;
+    --gold-soft: #C9A055;
+    --line: rgba(33,27,20,0.12);
+    --shadow: rgba(40,30,10,0.14);
+    --tile-shadow: rgba(40,30,10,0.08);
+  }
+
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    display:flex;
+    justify-content:center;
+    padding: 40px 16px 64px;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .card{ animation: rise .6s cubic-bezier(.2,.7,.3,1) both; }
+    .tile{ transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+    .tile:active{ transform: translateY(1px) scale(.98); }
+  }
+  @keyframes rise{
+    from{ opacity:0; transform: translateY(14px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  .wrap{ width:100%; max-width: 420px; }
+
+  .card{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 24px 48px -24px var(--shadow);
+  }
+
+  /* ---- brand plate: logo lockup on plain white, like the printed card front ---- */
+  .plate{
+    text-align:center;
+    padding: 34px 24px 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .plate img{ width: 100px; height: auto; display:block; margin: 0 auto 12px; }
+  .plate .brand{
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 600;
+    font-size: 1.9rem;
+    letter-spacing: 0.04em;
+    color: var(--text);
+  }
+  .plate .tagline{
+    margin-top: 6px;
+    font-size: 0.68rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+  }
+  .plate .tagline::before, .plate .tagline::after{
+    content:"";
+    width: 22px;
+    height:1px;
+    background: var(--gold-soft);
+  }
+  .plate .eyebrow{
+    margin-top: 16px;
+    font-size: 0.62rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    opacity: 0.75;
+  }
+
+  /* ---- profile ---- */
+  .profile{
+    display:flex;
+    gap: 16px;
+    align-items:center;
+    padding: 24px 24px 20px;
+  }
+  .avatar{
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    overflow:hidden;
+    flex: none;
+    border: 2px solid var(--gold-soft);
+    box-shadow: 0 6px 16px -6px var(--shadow);
+  }
+  .avatar img{ width:100%; height:100%; object-fit: cover; object-position: center 18%; display:block; }
+  .who .name{
+    font-family:"Playfair Display", Georgia, serif;
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height:1.15;
+    letter-spacing: 0.01em;
+  }
+  .who .name .cn{ font-size: 1.05rem; color: var(--text-soft); margin-left: 6px; }
+  .who .title{
+    margin-top: 4px;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .who .quick{
+    margin-top: 8px;
+    display:flex;
+    flex-direction:column;
+    gap: 3px;
+  }
+  .who .quick a{
+    font-size: 0.82rem;
+    color: var(--text-soft);
+    text-decoration:none;
+  }
+  .who .quick a:hover{ color: var(--gold); }
+
+  /* ---- section label ---- */
+  .section{ padding: 4px 24px 22px; }
+  .label{
+    font-size: 0.64rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+    margin-bottom: 12px;
+  }
+
+  .org-name{
+    font-family:"Playfair Display", Georgia, serif;
+    font-weight: 500;
+    font-size: 1.05rem;
+    color: var(--gold);
+  }
+  .org-reg{
+    margin-top: 2px;
+    font-size: 0.76rem;
+    color: var(--text-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .info-list{
+    margin-top: 14px;
+    display:flex;
+    flex-direction:column;
+    gap: 11px;
+  }
+  .info-row{
+    display:flex;
+    gap: 10px;
+    align-items:flex-start;
+    text-decoration:none;
+    color: var(--text);
+  }
+  .info-row svg{ flex:none; width:17px; height:17px; margin-top:2px; color: var(--gold); }
+  .info-row .lines{ display:flex; flex-direction:column; font-size: 0.86rem; line-height:1.45; }
+  .info-row .lines span.small{ color: var(--text-soft); font-size: 0.78rem; }
+  .info-row:hover{ color: var(--gold); }
+  .info-row:hover svg{ color: var(--gold); }
+
+  /* ---- action grid ---- */
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .tile{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap: 8px;
+    padding: 16px 6px 13px;
+    border-radius: 14px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    text-decoration:none;
+    color: var(--text);
+    box-shadow: 0 8px 18px -14px var(--tile-shadow);
+  }
+  .tile:hover{ border-color: var(--gold-soft); color: var(--gold); }
+  .tile svg{ width:22px; height:22px; color: var(--gold); }
+  .tile span{ font-size: 0.68rem; letter-spacing: 0.03em; font-weight: 600; }
+
+  /* ---- brands ---- */
+  .brands{
+    display:flex;
+    flex-wrap:nowrap;
+    align-items:center;
+    justify-content:space-between;
+    gap: 14px;
+    padding: 4px 2px 2px;
+  }
+  .brands img{
+    width: auto;
+    max-width: 120px;
+    display:block;
+  }
+  .brands img.b-md{ height: 30px; }
+  .brands img.b-sm{ height: 15px; }
+
+  /* ---- footer ---- */
+  .foot{
+    text-align:center;
+    padding: 22px 24px 30px;
+    border-top: 1px solid var(--line);
+  }
+  .foot .line1{
+    font-size: 0.68rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .foot .line2{
+    margin-top: 4px;
+    font-size: 0.72rem;
+    color: var(--text-soft);
+  }
+  .foot .thanks{
+    margin-top: 14px;
+    font-family: "Playfair Display", Georgia, serif;
+    font-style: italic;
+    font-size: 0.92rem;
+    color: var(--gold);
+  }
+
+  a{ -webkit-tap-highlight-color: transparent; }
+  :focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+
+    <div class="plate">
+      <img src="./img0.png" alt="A Ceramics mark" />
+      <div class="brand">A CERAMICS</div>
+      <div class="tagline">Creativity Design</div>
+      <div class="eyebrow">Digital Name Card</div>
+    </div>
+
+    <div class="profile">
+      <div class="avatar">
+        <img src="./img1.jpg" alt="Jimmi Yeo" />
+      </div>
+      <div class="who">
+        <div class="name">Jimmi Yeo<span class="cn">杨际立</span></div>
+        <div class="title">Managing Director</div>
+        <div class="quick">
+          <a href="tel:+60133428261">013&#8209;342&nbsp;8261</a>
+          <a href="mailto:jimmisg88@gmail.com">jimmisg88@gmail.com</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="label">Contact</div>
+      <div class="grid">
+        <a class="tile" href="tel:+60133428261">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.6 3.6h3.2l1.6 4.4-2 1.6a12.6 12.6 0 0 0 6 6l1.6-2 4.4 1.6v3.2c0 1-.8 1.8-1.8 1.7-7-.5-12.7-6.2-13.2-13.2-.1-1 .7-1.8 1.7-1.8Z"/></svg>
+          <span>Call</span>
+        </a>
+        <a class="tile" href="https://wa.me/60133428261" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20.4 7.1 16A8 8 0 1 1 10 18.7Z"/><path d="M9 10.2c0 3 2.7 5.6 5.6 5.6.4 0 .8-.4.8-1v-1l-2.2-.8-.8.9a5 5 0 0 1-2.5-2.5l.9-.8-.8-2.2h-1c-.6 0-1 .4-1 .8Z"/></svg>
+          <span>WhatsApp</span>
+        </a>
+        <a class="tile" href="mailto:jimmisg88@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4.5 7 7.5 6 7.5-6"/></svg>
+          <span>Email</span>
+        </a>
+        <a class="tile" href="data:text/vcard;charset=utf-8,BEGIN%3AVCARD%0D%0AVERSION%3A3.0%0D%0AN%3AYeo%3BJimmi%3B%3B%3B%0D%0AFN%3AJimmi%20Yeo%20%E6%9D%A8%E9%99%85%E7%AB%8B%0D%0AORG%3AA%20Ceramics%20Holdings%20Sdn%20Bhd%0D%0ATITLE%3AManaging%20Director%0D%0ATEL%3BTYPE%3DCELL%3A%2B60133428261%0D%0ATEL%3BTYPE%3DWORK%3A%2B60364204150%0D%0AEMAIL%3Ajimmisg88%40gmail.com%0D%0AURL%3Ahttps%3A//www.aceramicsholdings.com%0D%0AADR%3BTYPE%3DWORK%3A%3B%3BNo%2013A-1%2C%20Jalan%203/1%2C%20Setia%20Eco%20Templer%3BRawang%3BSelangor%3B48000%3BMalaysia%0D%0AEND%3AVCARD%0D%0A" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.2"/><circle cx="9" cy="11" r="2"/><path d="M6.2 16c.5-1.6 1.7-2.4 2.8-2.4s2.3.8 2.8 2.4"/><path d="M15.5 10.5h3M15.5 13.5h3"/></svg>
+          <span>Save Contact</span>
+        </a>
+        <a class="tile" href="https://www.aceramicsholdings.com" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.2"/><path d="M3.8 12h16.4M12 3.8c2.2 2.3 3.4 5.2 3.4 8.2s-1.2 5.9-3.4 8.2c-2.2-2.3-3.4-5.2-3.4-8.2s1.2-5.9 3.4-8.2Z"/></svg>
+          <span>Website</span>
+        </a>
+        <a class="tile" href="https://www.google.com/maps/search/?api=1&query=A%20Ceramics%20Holdings%20Sdn%20Bhd%2C%20No%2013A%2C%20Jalan%203/1%2C%20Setia%20Eco%20Templer%2C%2048000%20Rawang%2C%20Selangor" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.2s6.8-6.1 6.8-11.4a6.8 6.8 0 1 0-13.6 0c0 5.3 6.8 11.4 6.8 11.4Z"/><circle cx="12" cy="9.8" r="2.4"/></svg>
+          <span>Map</span>
+        </a>
+        <a class="tile" href="https://www.facebook.com/aceramics.my" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4.5"/><path d="M14 8.3h-1.4c-1 0-1.7.7-1.7 1.7v1.6h3.1M10.9 11.6v6.6"/></svg>
+          <span>Facebook</span>
+        </a>
+        <a class="tile" href="https://www.instagram.com/aceramicsholdings/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="16.3" cy="7.7" r="0.7" fill="currentColor" stroke="none"/></svg>
+          <span>Instagram</span>
+        </a>
+        <a class="tile" href="https://www.tiktok.com/@a.ceramics" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4.2v10.1a3.2 3.2 0 1 1-2.5-3.12"/><path d="M13 4.2c.35 2.45 2.1 4.1 4.6 4.35"/></svg>
+          <span>TikTok</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="label">Company</div>
+      <div class="org-name">A Ceramics Holdings Sdn Bhd</div>
+      <div class="org-reg">20210108529&nbsp;(1418829&#8209;T)</div>
+
+      <div class="info-list">
+        <a class="info-row" href="https://www.google.com/maps/search/?api=1&query=A%20Ceramics%20Holdings%20Sdn%20Bhd%2C%20No%2013A%2C%20Jalan%203/1%2C%20Setia%20Eco%20Templer%2C%2048000%20Rawang%2C%20Selangor" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.2s6.8-6.1 6.8-11.4a6.8 6.8 0 1 0-13.6 0c0 5.3 6.8 11.4 6.8 11.4Z"/><circle cx="12" cy="9.8" r="2.4"/></svg>
+          <span class="lines">No 13A&#8209;1, Jalan 3/1, Setia Eco Templer<span class="small">48000 Rawang, Selangor, Malaysia</span></span>
+        </a>
+        <a class="info-row" href="tel:+60133428261">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.6 3.6h3.2l1.6 4.4-2 1.6a12.6 12.6 0 0 0 6 6l1.6-2 4.4 1.6v3.2c0 1-.8 1.8-1.8 1.7-7-.5-12.7-6.2-13.2-13.2-.1-1 .7-1.8 1.7-1.8Z"/></svg>
+          <span class="lines">013&#8209;342&nbsp;8261 <span class="small">mobile</span></span>
+        </a>
+        <a class="info-row" href="tel:+60364204150">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.6 3.6h3.2l1.6 4.4-2 1.6a12.6 12.6 0 0 0 6 6l1.6-2 4.4 1.6v3.2c0 1-.8 1.8-1.8 1.7-7-.5-12.7-6.2-13.2-13.2-.1-1 .7-1.8 1.7-1.8Z"/></svg>
+          <span class="lines">03&#8209;6420&nbsp;4150 <span class="small">office</span></span>
+        </a>
+        <a class="info-row" href="mailto:jimmisg88@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4.5 7 7.5 6 7.5-6"/></svg>
+          <span class="lines">jimmisg88@gmail.com</span>
+        </a>
+        <a class="info-row" href="https://www.aceramicsholdings.com" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.2"/><path d="M3.8 12h16.4M12 3.8c2.2 2.3 3.4 5.2 3.4 8.2s-1.2 5.9-3.4 8.2c-2.2-2.3-3.4-5.2-3.4-8.2s1.2-5.9 3.4-8.2Z"/></svg>
+          <span class="lines">aceramicsholdings.com</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="label">Partner Brands</div>
+      <div class="brands">
+        <img class="b-sm" src="./img2.png" alt="Kimgres" />
+        <img class="b-md" src="./img3.png" alt="MML" />
+        <img class="b-md" src="./img4.png" alt="Portino" />
+        <img class="b-sm" src="./img5.png" alt="Niro Granite" />
+      </div>
+    </div>
+
+    <div class="foot">
+      <div class="line1">A Ceramics &middot; Creativity Design</div>
+      <div class="line2">Ceramic Tiles Distributor</div>
+      <div class="thanks">Thank you for connecting with us</div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
